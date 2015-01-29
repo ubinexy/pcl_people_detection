@@ -1,0 +1,34 @@
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+project(ground_based_rgbd_people_detector)
+find_package(PCL 1.7 REQUIRED)
+
+set(build TRUE)
+
+
+if(build)
+    set(incs 
+        "include/pcl/${SUBSYS_NAME}/ground_based_people_detection_app.h"
+        "include/pcl/${SUBSYS_NAME}/head_based_subcluster.h"
+        "include/pcl/${SUBSYS_NAME}/height_map_2d.h"
+        "include/pcl/${SUBSYS_NAME}/person_classifier.h"
+        "include/pcl/${SUBSYS_NAME}/person_cluster.h"
+        "include/pcl/${SUBSYS_NAME}/hog.h"
+        )
+
+    set(impl_incs
+        "include/pcl/${SUBSYS_NAME}/impl/ground_based_people_detection_app.hpp"
+        "include/pcl/${SUBSYS_NAME}/impl/head_based_subcluster.hpp"
+        "include/pcl/${SUBSYS_NAME}/impl/height_map_2d.hpp"
+        "include/pcl/${SUBSYS_NAME}/impl/person_classifier.hpp"
+        "include/pcl/${SUBSYS_NAME}/impl/person_cluster.hpp"
+        )
+
+    set(srcs
+        src/hog.cpp)
+
+include_directories(${PCL_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
+
+add_executable (ground_based_rgbd_people_detector apps/main_ground_based_people_detection.cpp)
+target_link_libraries (ground_based_rgbd_people_detector ${PCL_LIBRARIES})
